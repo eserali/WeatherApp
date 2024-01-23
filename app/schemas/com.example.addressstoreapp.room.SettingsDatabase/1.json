@@ -1,0 +1,58 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "0bcffaf3139c7ab52023c1eaa146ce61",
+    "entities": [
+      {
+        "tableName": "SettingsEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`Name` TEXT NOT NULL, `value1` TEXT, `value2` TEXT, `value3` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "Name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "value1",
+            "columnName": "value1",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "value2",
+            "columnName": "value2",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "value3",
+            "columnName": "value3",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '0bcffaf3139c7ab52023c1eaa146ce61')"
+    ]
+  }
+}

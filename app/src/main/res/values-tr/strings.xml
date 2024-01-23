@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="welcomefragment_message_text_good_Day">İyi Günler</string>
+    <string name="welcomefragment_message_text_good_evening">İyi Akşamlar</string>
+    <string name="welcomefragment_message_text_good_night">İyi Geceler</string>
+    <string name="locationpermissionfragment_snackbar_message">Otomatik lokasyon seçimi için izin veriniz</string>
+    <string name="language">tr</string>
+
+    <string name="snow">Kar Yağışlı</string>
+    <string name="rain">Yağmurlu</string>
+    <string name="clouds">Bulutlu</string>
+    <string name="clear">Açık</string>
+</resources>

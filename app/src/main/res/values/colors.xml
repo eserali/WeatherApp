@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="trans">@color/white</color>
+    <color name="trans2">#000B3C</color>
+    <color name="textColor">#FFFFFFFF</color>
+
+
+    <color name="seekbar_progress_dark_color">#4112C7</color>
+    333769
+    <color name="seekbar_progress_light_color">#4112C7</color>
+    8473DF
+    <color name="opacity_White">#8CFFFFFF</color>
+
+
+</resources>

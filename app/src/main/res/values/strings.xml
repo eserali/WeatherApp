@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">WeatherApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="welcomefragment_message_text_good_Day">Have a Nice Day</string>
+    <string name="welcomefragment_message_text_good_evening">Good Evening</string>
+    <string name="welcomefragment_message_text_good_night">Good Night</string>
+    <string name="locationpermissionfragment_snackbar_message">Permission needed for auto location</string>
+    <string name="language">en</string>
+
+    <string name="snow">Snow</string>
+    <string name="rain">Rain</string>
+    <string name="clouds">Cloudy</string>
+    <string name="clear">Clear</string>
+
+
+</resources>
