@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,6 +26,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.room.Room
 import com.example.addressstoreapp.R
 import com.example.addressstoreapp.databinding.FragmentLocationPermissionBinding
+import com.example.addressstoreapp.manager.CitiesManager
+import com.example.addressstoreapp.manager.WeatherManager
 import com.example.addressstoreapp.room.UserDao
 import com.example.addressstoreapp.room.UserDatabase
 import com.example.addressstoreapp.room.UserEntity
@@ -38,7 +41,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.util.Locale
 
-class LocationPermissionFragment : Fragment() {
+class LocationPermissionFragment : Fragment(){
     private lateinit var permissionLauncher  : ActivityResultLauncher<String>
     private lateinit var fusedLocationClient : FusedLocationProviderClient
     private lateinit var userDb : UserDatabase
@@ -64,32 +67,61 @@ class LocationPermissionFragment : Fragment() {
         super.onCreate(savedInstanceState)
         binding = FragmentLocationPermissionBinding.inflate(layoutInflater)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
+        binding.txtSelectCity.text = getString(R.string.selectCityText)
         userDb = Room.databaseBuilder(requireContext(),UserDatabase::class.java,"UserDatabase").allowMainThreadQueries().build()
         userDao = userDb.userDao()
+        binding.progressBar.visibility = View.INVISIBLE
+        val allCities = CitiesManager.getCities()
+
+        val citiesNameListForMenu =allCities.map {
+            it.name
+        }
+
+        val provinceArrayAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,citiesNameListForMenu)
+        binding.autoCompleteTvProvinces.setAdapter(provinceArrayAdapter)
+
+        binding.autoCompleteTvProvinces.setOnItemClickListener { parent, view, position, id ->
+            val selectedProvince = parent.getItemAtPosition(position)
+
+            val selectedCity = allCities.first {
+                it.name == selectedProvince
+            }
+
+            val districtNameList = CitiesManager.getDistrict(selectedCity.id).map {
+                it.name
+            }
+            binding.textInputLayoutDistrict.editText!!.setText("")
+            binding.textInputLayoutNeighbourhoods.editText!!.setText("")
+
+            val districtArrayAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,districtNameList)
+            binding.autoCompleteTvDistricts.setAdapter(districtArrayAdapter)
+
+            binding.autoCompleteTvDistricts.showDropDown()
+
+            binding.autoCompleteTvDistricts.setOnItemClickListener { parent, view, position, id ->
+
+                val selectedDistrict = parent.getItemAtPosition(position).toString()
+                val neighbourhoodNameListForMenu = CitiesManager.getNeighbourhood(selectedCity.id,selectedDistrict).map {
+                    it.name
+                }
+                binding.textInputLayoutNeighbourhoods.editText!!.setText("")
+
+                val neighbourhoodArrayAdapter = ArrayAdapter(requireContext(),android.R.layout.simple_list_item_1,neighbourhoodNameListForMenu)
+                binding.autoCompleteTvNeighbourhoods.setAdapter(neighbourhoodArrayAdapter)
+
+                binding.autoCompleteTvNeighbourhoods.showDropDown()
+
+            }
+        }
+
 
         var coarseLocationPermission = permissionLauncher()
 
-
         if(ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_COARSE_LOCATION) !=
             PackageManager.PERMISSION_GRANTED) {
-            // izin verilmedi rationale
-            if(ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(),Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                // neden izin lazım onu yaz Snackbar ile 2 seçenek koy
-               Snackbar.make(binding.progressBar,R.string.locationpermissionfragment_snackbar_message,Snackbar.LENGTH_INDEFINITE).setAction("Give permission",
-                   View.OnClickListener {
-                   coarseLocationPermission.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
+            coarseLocationPermission.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
 
-               }).show()
-
-            }else {
-                // izin iste
-                coarseLocationPermission.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-
-            }
         } else {
-            // izin verildi yani daha önce izin verildiğinden
-
             coarseLocationPermission.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
 
             val navHost = requireActivity().supportFragmentManager.findFragmentById(R.id.addressNavHostFragment) as NavHostFragment
@@ -107,7 +139,6 @@ class LocationPermissionFragment : Fragment() {
                 if(ContextCompat.checkSelfPermission(requireContext(),Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
                     fusedLocationClient.lastLocation.addOnSuccessListener {
-                        var ggg = it
 
                         if(it != null) {
                             //Burada GeoCoder için versiyon kontrolü yaptık yoksa fusedlocation ile ilgili değil.
@@ -129,6 +160,7 @@ class LocationPermissionFragment : Fragment() {
                                 val cityName = address!![0].adminArea
                                 val user = UserEntity("","",cityName)
                                 userDao.insertUser(user)
+                                progressBarForGetLocation()
                             }
 
                         }
@@ -137,15 +169,21 @@ class LocationPermissionFragment : Fragment() {
                 }
 
             } else {
-                // izin verilmedi
-
+                if(userDao.getUser().isNotEmpty()){
+                    progressBarForGetLocation()
+                } else {
+                    binding.saveButton.setOnClickListener {
+                        val cityName = binding.textInputLayoutProvince.editText!!.text.toString()
+                        val user = UserEntity("","",cityName)
+                        userDao.insertUser(user)
+                        progressBarForGetLocation()
+                    }
+                }
             }
-
         }
         return permissionLauncher
 
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

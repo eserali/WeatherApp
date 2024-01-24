@@ -8,6 +8,79 @@
     android:background="@drawable/location"
     tools:context=".view.LocationPermissionFragment" >
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutProvince"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="180dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
+
+        android:hint="Province"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtSelectCity">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTvProvinces"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:textColorHint="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold">
+
+        </AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutDistrict"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="180dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="24dp"
+        android:hint="District"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutProvince"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayoutProvince"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayoutProvince">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTvDistricts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:textColorHint="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold">
+
+        </AutoCompleteTextView>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutNeighbourhoods"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="24dp"
+        android:hint="Neighbourhood"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutProvince"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutProvince" >
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTvNeighbourhoods"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="none"
+            android:textColorHint="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold">
+
+        </AutoCompleteTextView>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -16,6 +89,27 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="SAVE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutNeighbourhoods" />
+
+    <TextView
+        android:id="@+id/txtSelectCity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

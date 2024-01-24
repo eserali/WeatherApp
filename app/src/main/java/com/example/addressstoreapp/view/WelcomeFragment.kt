@@ -30,7 +30,7 @@ class WelcomeFragment : Fragment() {
         binding  = FragmentWelcomeBinding.inflate(layoutInflater,container,false)
         val settingsManager = SettingsManager(requireContext())
         val settings =   settingsManager.getOrAdd(SettingsName.WelcomeFragmentTimeZone)
-        val currentHour = Calendar.HOUR// gece 12 sabah 7 arası iyi geceler 7 ile 6 arası iyi günler 6 12 arası iyi akşamlar
+        val currentHour = Calendar.HOUR
 
         if (currentHour <= settings.value1!!.toInt()) {
             binding.txtWelcome.setText(R.string.welcomefragment_message_text_good_night)

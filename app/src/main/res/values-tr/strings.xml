@@ -12,4 +12,6 @@
     <string name="rain">Yağmurlu</string>
     <string name="clouds">Bulutlu</string>
     <string name="clear">Açık</string>
+
+    <string name="selectCityText">Lütfen bir şehir seçiniz</string>
 </resources>

@@ -98,4 +98,7 @@ dependencies {
     // For Gif
     implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.22")
 
+    //
+    implementation ("com.google.android.material:material:1.1.0-alpha06")
+
 }
