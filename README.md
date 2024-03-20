@@ -13,7 +13,7 @@
 
 * WeatherApp, bir hava durumu uygulamasıdır. 
 * Uygulama Türkçe-İngilizce dil desteğine sahiptir.
-* Activity ve Fragmentlar arası ekran geçişleri navigaasyon grafiği ile yapılmıştır.
+* Activity ve Fragmentlar arası ekran geçişleri navigasyon grafiği ile yapılmıştır.
 * İlk olarak giriş sayfası sizleri karşılar devamında konum bilgileriniz için izin isteyen sayfa açılır.
 * Bu sayfada konum izni vermeniz durumunda mevcut konumunuzdaki şehrin konum bilgileri yaklaşım konum alınarak ve de “Geo coder” kullanılarak yaklaşık konumunuzdaki
   şehir room kütüphanesi sayesinde telefonunun hafızasına kayıt edilir ve devamında yönlendirildiğiniz sayfada konumunuza ait hava durumu bilgileri size sunulur.
